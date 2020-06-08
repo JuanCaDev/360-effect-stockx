@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Efecto 360 stock</title>
+  <style>
+    input {
+      max-width: 768px;
+    }
+
+    canvas {
+      max-width: 768px;
+      max-height: 512px;
+    }
+
+    .grid {
+      grid-template-columns: 1fr 2fr;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr;
+        margin-top: 1rem;
+      }  
+    }
+  </style>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mx-auto px-4 md:px-0 my-2">
+    <h1 class="text-3xl md:text-5xl font-bold leading-tight">Adidas Yeezy Boost 350 V2 Yecheil (Non-Reflective)</h1>
+    <canvas id="canvas" width="768" height="512" class="w-full mx-auto"></canvas>
+    <input type="range" min="1" max="36" step="1" value="1" id="slider" class="block mx-auto w-full">
+
+    <section class="grid mt-5 md:mt-10">
+      <div>
+        <div class="mb-2"><span class="font-bold">STYLE</span> <span>FW5 190</span></div>
+        <div class="mb-2"><span class="font-bold">COLORWAY</span> <span>YECHEIL/YECHEIL/YECHEIL</span></div>
+        <div class="mb-2"><span class="font-bold">RETAIL PRICE</span> <span>$220</span></div>
+        <div class="mb-2"><span class="font-bold">RELEASE DATE</span> <span>12/20/2019</span></div>
+      </div>
+
+      <div>
+        <p>
+          Yeezy adds a flare to one of its most well-known designs with the adidas Yeezy 350 Yecheil Non-Reflective, now available on StockX. This 350 V2 strays away from the usual earth tones with a colorful palette, making it stand out from previous releases. This model was released in both reflective and non-reflective variations.
+        </p>
+        <br>
+        <p>
+          This Yeezy 350 V2 is composed of a black upper with white, red, yellow, and blue accents. A black Boost cushioned sole and black side stripe completes the design. These sneakers released in December of 2019 and retailed for $220.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const slider = document.getElementById("slider")
+    const canvas = document.getElementById("canvas")
+
+    slider.addEventListener("input", handleInputSlider)
+
+    const ctx = canvas.getContext("2d")
+    const images = []
+
+    window.addEventListener("load", pageLoaded)
+
+    function pageLoaded() {
+      for (let i = 1; i <= 36; i++) {
+        const number = i.toString().padStart(2, '00')
+        const url = `https://stockx-360.imgix.net/adidas-Yeezy-Boost-350-V2-Yecheil/Images/adidas-Yeezy-Boost-350-V2-Yecheil/Lv2/img${number}.jpg?auto=format,compress&w=559&q=90&dpr=2&updated_at=1574449122`
+        const image = new Image()
+        image.src = url
+        image.addEventListener("load", () => {
+          images[i] = image
+          if (i === 1) {
+            loadImage(i)
+          }
+        })
+      }
+    }
+
+    function loadImage(index) {
+      ctx.drawImage(images[index], 0, 0, canvas.width, canvas.height)
+    }
+    
+    function handleInputSlider() {
+      console.log(this.value)
+      loadImage(this.value)
+    }
+  </script>
+</body>
+</html>
